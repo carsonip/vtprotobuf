@@ -117,6 +117,83 @@ func (m *Element2) CloneMessageVT() proto.Message {
 	return m.CloneVT()
 }
 
+func (m *Test3) CloneVT() *Test3 {
+	if m == nil {
+		return (*Test3)(nil)
+	}
+	r := &Test3{}
+	if rhs := m.Sl; rhs != nil {
+		tmpContainer := make([]*Slice3, len(rhs))
+		for k, v := range rhs {
+			tmpContainer[k] = v.CloneVT()
+		}
+		r.Sl = tmpContainer
+	}
+	if len(m.unknownFields) > 0 {
+		r.unknownFields = make([]byte, len(m.unknownFields))
+		copy(r.unknownFields, m.unknownFields)
+	}
+	return r
+}
+
+func (m *Test3) CloneMessageVT() proto.Message {
+	return m.CloneVT()
+}
+
+func (m *Slice3) CloneVT() *Slice3 {
+	if m == nil {
+		return (*Slice3)(nil)
+	}
+	r := &Slice3{
+		D: m.D.CloneVT(),
+		E: m.E,
+		F: m.F,
+	}
+	if rhs := m.A; rhs != nil {
+		tmpContainer := make(map[int64]int64, len(rhs))
+		for k, v := range rhs {
+			tmpContainer[k] = v
+		}
+		r.A = tmpContainer
+	}
+	if rhs := m.B; rhs != nil {
+		tmpVal := *rhs
+		r.B = &tmpVal
+	}
+	if rhs := m.C; rhs != nil {
+		tmpContainer := make([]string, len(rhs))
+		copy(tmpContainer, rhs)
+		r.C = tmpContainer
+	}
+	if len(m.unknownFields) > 0 {
+		r.unknownFields = make([]byte, len(m.unknownFields))
+		copy(r.unknownFields, m.unknownFields)
+	}
+	return r
+}
+
+func (m *Slice3) CloneMessageVT() proto.Message {
+	return m.CloneVT()
+}
+
+func (m *Element3) CloneVT() *Element3 {
+	if m == nil {
+		return (*Element3)(nil)
+	}
+	r := &Element3{
+		A: m.A,
+	}
+	if len(m.unknownFields) > 0 {
+		r.unknownFields = make([]byte, len(m.unknownFields))
+		copy(r.unknownFields, m.unknownFields)
+	}
+	return r
+}
+
+func (m *Element3) CloneMessageVT() proto.Message {
+	return m.CloneVT()
+}
+
 func (this *Test1) EqualVT(that *Test1) bool {
 	if this == that {
 		return true
@@ -238,6 +315,107 @@ func (this *Element2) EqualVT(that *Element2) bool {
 
 func (this *Element2) EqualMessageVT(thatMsg proto.Message) bool {
 	that, ok := thatMsg.(*Element2)
+	if !ok {
+		return false
+	}
+	return this.EqualVT(that)
+}
+func (this *Test3) EqualVT(that *Test3) bool {
+	if this == that {
+		return true
+	} else if this == nil || that == nil {
+		return false
+	}
+	if len(this.Sl) != len(that.Sl) {
+		return false
+	}
+	for i, vx := range this.Sl {
+		vy := that.Sl[i]
+		if p, q := vx, vy; p != q {
+			if p == nil {
+				p = &Slice3{}
+			}
+			if q == nil {
+				q = &Slice3{}
+			}
+			if !p.EqualVT(q) {
+				return false
+			}
+		}
+	}
+	return string(this.unknownFields) == string(that.unknownFields)
+}
+
+func (this *Test3) EqualMessageVT(thatMsg proto.Message) bool {
+	that, ok := thatMsg.(*Test3)
+	if !ok {
+		return false
+	}
+	return this.EqualVT(that)
+}
+func (this *Slice3) EqualVT(that *Slice3) bool {
+	if this == that {
+		return true
+	} else if this == nil || that == nil {
+		return false
+	}
+	if len(this.A) != len(that.A) {
+		return false
+	}
+	for i, vx := range this.A {
+		vy, ok := that.A[i]
+		if !ok {
+			return false
+		}
+		if vx != vy {
+			return false
+		}
+	}
+	if p, q := this.B, that.B; (p == nil && q != nil) || (p != nil && (q == nil || *p != *q)) {
+		return false
+	}
+	if len(this.C) != len(that.C) {
+		return false
+	}
+	for i, vx := range this.C {
+		vy := that.C[i]
+		if vx != vy {
+			return false
+		}
+	}
+	if !this.D.EqualVT(that.D) {
+		return false
+	}
+	if this.E != that.E {
+		return false
+	}
+	if this.F != that.F {
+		return false
+	}
+	return string(this.unknownFields) == string(that.unknownFields)
+}
+
+func (this *Slice3) EqualMessageVT(thatMsg proto.Message) bool {
+	that, ok := thatMsg.(*Slice3)
+	if !ok {
+		return false
+	}
+	return this.EqualVT(that)
+}
+func (this *Element3) EqualVT(that *Element3) bool {
+	if this == that {
+		return true
+	} else if this == nil || that == nil {
+		return false
+	}
+	if this.A != that.A {
+		return false
+	}
+	return string(this.unknownFields) == string(that.unknownFields)
+}
+
+func (this *Element3) EqualMessageVT(thatMsg proto.Message) bool {
+	that, ok := thatMsg.(*Element3)
 	if !ok {
 		return false
 	}
@@ -433,6 +611,173 @@ func (m *Element2) MarshalToVT(dAtA []byte) (int, error) {
 }
 
 func (m *Element2) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
+	if m == nil {
+		return 0, nil
+	}
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.unknownFields != nil {
+		i -= len(m.unknownFields)
+		copy(dAtA[i:], m.unknownFields)
+	}
+	if m.A != 0 {
+		i = encodeVarint(dAtA, i, uint64(m.A))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *Test3) MarshalVT() (dAtA []byte, err error) {
+	if m == nil {
+		return nil, nil
+	}
+	size := m.SizeVT()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBufferVT(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Test3) MarshalToVT(dAtA []byte) (int, error) {
+	size := m.SizeVT()
+	return m.MarshalToSizedBufferVT(dAtA[:size])
+}
+
+func (m *Test3) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
+	if m == nil {
+		return 0, nil
+	}
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.unknownFields != nil {
+		i -= len(m.unknownFields)
+		copy(dAtA[i:], m.unknownFields)
+	}
+	if len(m.Sl) > 0 {
+		for iNdEx := len(m.Sl) - 1; iNdEx >= 0; iNdEx-- {
+			size, err := m.Sl[iNdEx].MarshalToSizedBufferVT(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarint(dAtA, i, uint64(size))
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *Slice3) MarshalVT() (dAtA []byte, err error) {
+	if m == nil {
+		return nil, nil
+	}
+	size := m.SizeVT()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBufferVT(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Slice3) MarshalToVT(dAtA []byte) (int, error) {
+	size := m.SizeVT()
+	return m.MarshalToSizedBufferVT(dAtA[:size])
+}
+
+func (m *Slice3) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
+	if m == nil {
+		return 0, nil
+	}
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.unknownFields != nil {
+		i -= len(m.unknownFields)
+		copy(dAtA[i:], m.unknownFields)
+	}
+	if m.F != 0 {
+		i = encodeVarint(dAtA, i, uint64(m.F))
+		i--
+		dAtA[i] = 0x30
+	}
+	if len(m.E) > 0 {
+		i -= len(m.E)
+		copy(dAtA[i:], m.E)
+		i = encodeVarint(dAtA, i, uint64(len(m.E)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if m.D != nil {
+		size, err := m.D.MarshalToSizedBufferVT(dAtA[:i])
+		if err != nil {
+			return 0, err
+		}
+		i -= size
+		i = encodeVarint(dAtA, i, uint64(size))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.C) > 0 {
+		for iNdEx := len(m.C) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.C[iNdEx])
+			copy(dAtA[i:], m.C[iNdEx])
+			i = encodeVarint(dAtA, i, uint64(len(m.C[iNdEx])))
+			i--
+			dAtA[i] = 0x1a
+		}
+	}
+	if m.B != nil {
+		i = encodeVarint(dAtA, i, uint64(*m.B))
+		i--
+		dAtA[i] = 0x10
+	}
+	if len(m.A) > 0 {
+		for k := range m.A {
+			v := m.A[k]
+			baseI := i
+			i = encodeVarint(dAtA, i, uint64(v))
+			i--
+			dAtA[i] = 0x10
+			i = encodeVarint(dAtA, i, uint64(k))
+			i--
+			dAtA[i] = 0x8
+			i = encodeVarint(dAtA, i, uint64(baseI-i))
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *Element3) MarshalVT() (dAtA []byte, err error) {
+	if m == nil {
+		return nil, nil
+	}
+	size := m.SizeVT()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBufferVT(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Element3) MarshalToVT(dAtA []byte) (int, error) {
+	size := m.SizeVT()
+	return m.MarshalToSizedBufferVT(dAtA[:size])
+}
+
+func (m *Element3) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	if m == nil {
 		return 0, nil
 	}
@@ -661,6 +1006,173 @@ func (m *Element2) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *Test3) MarshalVTStrict() (dAtA []byte, err error) {
+	if m == nil {
+		return nil, nil
+	}
+	size := m.SizeVT()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBufferVTStrict(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Test3) MarshalToVTStrict(dAtA []byte) (int, error) {
+	size := m.SizeVT()
+	return m.MarshalToSizedBufferVTStrict(dAtA[:size])
+}
+
+func (m *Test3) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
+	if m == nil {
+		return 0, nil
+	}
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.unknownFields != nil {
+		i -= len(m.unknownFields)
+		copy(dAtA[i:], m.unknownFields)
+	}
+	if len(m.Sl) > 0 {
+		for iNdEx := len(m.Sl) - 1; iNdEx >= 0; iNdEx-- {
+			size, err := m.Sl[iNdEx].MarshalToSizedBufferVTStrict(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarint(dAtA, i, uint64(size))
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *Slice3) MarshalVTStrict() (dAtA []byte, err error) {
+	if m == nil {
+		return nil, nil
+	}
+	size := m.SizeVT()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBufferVTStrict(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Slice3) MarshalToVTStrict(dAtA []byte) (int, error) {
+	size := m.SizeVT()
+	return m.MarshalToSizedBufferVTStrict(dAtA[:size])
+}
+
+func (m *Slice3) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
+	if m == nil {
+		return 0, nil
+	}
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.unknownFields != nil {
+		i -= len(m.unknownFields)
+		copy(dAtA[i:], m.unknownFields)
+	}
+	if m.F != 0 {
+		i = encodeVarint(dAtA, i, uint64(m.F))
+		i--
+		dAtA[i] = 0x30
+	}
+	if len(m.E) > 0 {
+		i -= len(m.E)
+		copy(dAtA[i:], m.E)
+		i = encodeVarint(dAtA, i, uint64(len(m.E)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if m.D != nil {
+		size, err := m.D.MarshalToSizedBufferVTStrict(dAtA[:i])
+		if err != nil {
+			return 0, err
+		}
+		i -= size
+		i = encodeVarint(dAtA, i, uint64(size))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.C) > 0 {
+		for iNdEx := len(m.C) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.C[iNdEx])
+			copy(dAtA[i:], m.C[iNdEx])
+			i = encodeVarint(dAtA, i, uint64(len(m.C[iNdEx])))
+			i--
+			dAtA[i] = 0x1a
+		}
+	}
+	if m.B != nil {
+		i = encodeVarint(dAtA, i, uint64(*m.B))
+		i--
+		dAtA[i] = 0x10
+	}
+	if len(m.A) > 0 {
+		for k := range m.A {
+			v := m.A[k]
+			baseI := i
+			i = encodeVarint(dAtA, i, uint64(v))
+			i--
+			dAtA[i] = 0x10
+			i = encodeVarint(dAtA, i, uint64(k))
+			i--
+			dAtA[i] = 0x8
+			i = encodeVarint(dAtA, i, uint64(baseI-i))
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *Element3) MarshalVTStrict() (dAtA []byte, err error) {
+	if m == nil {
+		return nil, nil
+	}
+	size := m.SizeVT()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBufferVTStrict(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Element3) MarshalToVTStrict(dAtA []byte) (int, error) {
+	size := m.SizeVT()
+	return m.MarshalToSizedBufferVTStrict(dAtA[:size])
+}
+
+func (m *Element3) MarshalToSizedBufferVTStrict(dAtA []byte) (int, error) {
+	if m == nil {
+		return 0, nil
+	}
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.unknownFields != nil {
+		i -= len(m.unknownFields)
+		copy(dAtA[i:], m.unknownFields)
+	}
+	if m.A != 0 {
+		i = encodeVarint(dAtA, i, uint64(m.A))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
 var vtprotoPool_Test1 = sync.Pool{
 	New: func() interface{} {
 		return &Test1{}
@@ -699,6 +1211,71 @@ func (m *Test2) ReturnToVTPool() {
 }
 func Test2FromVTPool() *Test2 {
 	return vtprotoPool_Test2.Get().(*Test2)
+}
+
+var vtprotoPool_Test3 = sync.Pool{
+	New: func() interface{} {
+		return &Test3{}
+	},
+}
+
+func (m *Test3) ResetVT() {
+	for _, mm := range m.Sl {
+		mm.ResetVT()
+	}
+	f0 := m.Sl[:0]
+	m.Reset()
+	m.Sl = f0
+}
+func (m *Test3) ReturnToVTPool() {
+	if m != nil {
+		m.ResetVT()
+		vtprotoPool_Test3.Put(m)
+	}
+}
+func Test3FromVTPool() *Test3 {
+	return vtprotoPool_Test3.Get().(*Test3)
+}
+
+var vtprotoPool_Slice3 = sync.Pool{
+	New: func() interface{} {
+		return &Slice3{}
+	},
+}
+
+func (m *Slice3) ResetVT() {
+	f0 := m.C[:0]
+	m.D.ReturnToVTPool()
+	m.Reset()
+	m.C = f0
+}
+func (m *Slice3) ReturnToVTPool() {
+	if m != nil {
+		m.ResetVT()
+		vtprotoPool_Slice3.Put(m)
+	}
+}
+func Slice3FromVTPool() *Slice3 {
+	return vtprotoPool_Slice3.Get().(*Slice3)
+}
+
+var vtprotoPool_Element3 = sync.Pool{
+	New: func() interface{} {
+		return &Element3{}
+	},
+}
+
+func (m *Element3) ResetVT() {
+	m.Reset()
+}
+func (m *Element3) ReturnToVTPool() {
+	if m != nil {
+		m.ResetVT()
+		vtprotoPool_Element3.Put(m)
+	}
+}
+func Element3FromVTPool() *Element3 {
+	return vtprotoPool_Element3.Get().(*Element3)
 }
 func (m *Test1) SizeVT() (n int) {
 	if m == nil {
@@ -771,6 +1348,73 @@ func (m *Slice2) SizeVT() (n int) {
 }
 
 func (m *Element2) SizeVT() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.A != 0 {
+		n += 1 + sov(uint64(m.A))
+	}
+	n += len(m.unknownFields)
+	return n
+}
+
+func (m *Test3) SizeVT() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.Sl) > 0 {
+		for _, e := range m.Sl {
+			l = e.SizeVT()
+			n += 1 + l + sov(uint64(l))
+		}
+	}
+	n += len(m.unknownFields)
+	return n
+}
+
+func (m *Slice3) SizeVT() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.A) > 0 {
+		for k, v := range m.A {
+			_ = k
+			_ = v
+			mapEntrySize := 1 + sov(uint64(k)) + 1 + sov(uint64(v))
+			n += mapEntrySize + 1 + sov(uint64(mapEntrySize))
+		}
+	}
+	if m.B != nil {
+		n += 1 + sov(uint64(*m.B))
+	}
+	if len(m.C) > 0 {
+		for _, s := range m.C {
+			l = len(s)
+			n += 1 + l + sov(uint64(l))
+		}
+	}
+	if m.D != nil {
+		l = m.D.SizeVT()
+		n += 1 + l + sov(uint64(l))
+	}
+	l = len(m.E)
+	if l > 0 {
+		n += 1 + l + sov(uint64(l))
+	}
+	if m.F != 0 {
+		n += 1 + sov(uint64(m.F))
+	}
+	n += len(m.unknownFields)
+	return n
+}
+
+func (m *Element3) SizeVT() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1274,6 +1918,457 @@ func (m *Element2) UnmarshalVT(dAtA []byte) error {
 		}
 		if fieldNum <= 0 {
 			return fmt.Errorf("proto: Element2: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field A", wireType)
+			}
+			m.A = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.A |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skip(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLength
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.unknownFields = append(m.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Test3) UnmarshalVT(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflow
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Test3: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Test3: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Sl", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLength
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLength
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if len(m.Sl) == cap(m.Sl) {
+				m.Sl = append(m.Sl, &Slice3{})
+			} else {
+				m.Sl = m.Sl[:len(m.Sl)+1]
+				if m.Sl[len(m.Sl)-1] == nil {
+					m.Sl[len(m.Sl)-1] = &Slice3{}
+				}
+			}
+			if err := m.Sl[len(m.Sl)-1].UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skip(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLength
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.unknownFields = append(m.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Slice3) UnmarshalVT(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflow
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Slice3: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Slice3: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field A", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLength
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLength
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.A == nil {
+				m.A = make(map[int64]int64)
+			}
+			var mapkey int64
+			var mapvalue int64
+			for iNdEx < postIndex {
+				entryPreIndex := iNdEx
+				var wire uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					wire |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				fieldNum := int32(wire >> 3)
+				if fieldNum == 1 {
+					for shift := uint(0); ; shift += 7 {
+						if shift >= 64 {
+							return ErrIntOverflow
+						}
+						if iNdEx >= l {
+							return io.ErrUnexpectedEOF
+						}
+						b := dAtA[iNdEx]
+						iNdEx++
+						mapkey |= int64(b&0x7F) << shift
+						if b < 0x80 {
+							break
+						}
+					}
+				} else if fieldNum == 2 {
+					for shift := uint(0); ; shift += 7 {
+						if shift >= 64 {
+							return ErrIntOverflow
+						}
+						if iNdEx >= l {
+							return io.ErrUnexpectedEOF
+						}
+						b := dAtA[iNdEx]
+						iNdEx++
+						mapvalue |= int64(b&0x7F) << shift
+						if b < 0x80 {
+							break
+						}
+					}
+				} else {
+					iNdEx = entryPreIndex
+					skippy, err := skip(dAtA[iNdEx:])
+					if err != nil {
+						return err
+					}
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
+						return ErrInvalidLength
+					}
+					if (iNdEx + skippy) > postIndex {
+						return io.ErrUnexpectedEOF
+					}
+					iNdEx += skippy
+				}
+			}
+			m.A[mapkey] = mapvalue
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field B", wireType)
+			}
+			var v int32
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.B = &v
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field C", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLength
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLength
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.C = append(m.C, string(dAtA[iNdEx:postIndex]))
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field D", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLength
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLength
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.D == nil {
+				m.D = Element3FromVTPool()
+			}
+			if err := m.D.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field E", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLength
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLength
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.E = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 6:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field F", wireType)
+			}
+			m.F = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.F |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skip(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLength
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.unknownFields = append(m.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Element3) UnmarshalVT(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflow
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Element3: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Element3: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:

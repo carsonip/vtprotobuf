@@ -23,3 +23,21 @@ message Slice2 {
 message Element2 {
   int32 a = 1;
 }
+
+message Test3 {
+  option (vtproto.mempool) = true;
+  repeated Slice3 Sl = 1;
+}
+message Slice3 {
+  option (vtproto.mempool) = true;
+  map<int64, int64> a = 1;
+  optional int32 b = 2;
+  repeated string c = 3;
+  Element3 d = 4;
+  string e = 5;
+  int64 f = 6;
+}
+message Element3 {
+  option (vtproto.mempool) = true;
+  int32 a = 1;
+}

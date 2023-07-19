@@ -87,3 +87,60 @@ func Test_Pool_slice_recreation(t *testing.T) {
 	assert.Zero(t, req.Sl[0].F)
 
 }
+
+func Test_Pool_slice_pooled(t *testing.T) {
+	var b int32 = 10
+	dataRequest := Test3{
+		Sl: []*Slice3{
+			{
+				A: map[int64]int64{
+					22: 33,
+				},
+				B: &b,
+				C: []string{"one", "two"},
+				D: &Element3{
+					A: 10,
+				},
+				E: "something",
+				F: 123,
+			},
+		},
+	}
+	dataReqBytes, err := dataRequest.MarshalVT()
+	require.NoError(t, err)
+
+	nilRequest := Test3{
+		Sl: []*Slice3{
+			{
+				A: nil,
+				B: nil,
+				C: nil,
+				D: nil,
+				E: "",
+				F: 0,
+			},
+		},
+	}
+	nilReqBytes, err := nilRequest.MarshalVT()
+	require.NoError(t, err)
+
+	req := Test3FromVTPool()
+	err = req.UnmarshalVT(dataReqBytes)
+	slAddr := &req.Sl[0]
+	log.Println(req)
+	require.NoError(t, err)
+	req.ReturnToVTPool()
+
+	req = Test3FromVTPool()
+	err = req.UnmarshalVT(nilReqBytes)
+	require.NoError(t, err)
+
+	assert.Same(t, &req.Sl[0], slAddr)
+	assert.Nil(t, req.Sl[0].A)
+	assert.Nil(t, req.Sl[0].B)
+	assert.Nil(t, req.Sl[0].D)
+	assert.Empty(t, req.Sl[0].C) // req.Sl[0].C is []string{} instead of nil
+	assert.Zero(t, req.Sl[0].E)
+	assert.Zero(t, req.Sl[0].F)
+
+}
